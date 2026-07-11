@@ -1,0 +1,39 @@
+# Environment
+
+.env
+
+# Flutter
+
+build/
+.dart_tool/
+.packages
+
+# Android
+
+.gradle/
+
+# iOS
+
+Pods/
+
+# Go
+
+*.exe
+
+*.test
+
+*.out
+
+# PocketBase
+
+pb_data/
+
+# IDE
+
+.vscode/
+
+.idea/
+
+# macOS
+
+.DS_Store
