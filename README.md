@@ -78,13 +78,14 @@ Pronounce AI automatically retries analysis if the primary AI model becomes unav
 
 Primary model:
 
-Nemotron 3 Ultra (nvfp4)
+DeepSeek V4 Flash
 
 ↓
 
 Fallback:
 
-DeepSeek V4 Flash
+Nemotron 3 Ultra (nvfp4)
+
 
 This happens transparently without interrupting the user.
 
@@ -244,20 +245,13 @@ pronounce-ai/
 
 # Screenshots
 
-Add screenshots to:
+screenshots added to:
 
 ```
 docs/screenshots/
 ```
 
-Suggested screenshots:
 
-* Home Screen
-* Analysis Results
-* Bottom Sheet
-* Analysis History
-* Cache Demonstration
-* Loading Animation
 
 ---
 
