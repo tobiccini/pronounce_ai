@@ -408,7 +408,7 @@ func RegisterRoutes(se *core.ServeEvent) {
   <footer>
     health: <a href="/api/health">/api/health</a> &nbsp;&middot;&nbsp;
     endpoint: <code>POST /api/pronounce</code>
-    // <div class="powered-by">Powered by <b>AMD</b> + <b>Fireworks AI</b></div>
+    
     <div class="powered-by">Powered by <b>AMD</b></div>
     </footer>
 
@@ -537,8 +537,8 @@ function render(data) {
     }
 
     var agentLabel = modelName
-      ? ('analyzed ' + modelName + ' on ' + providerName)
-      : ('analyzed by ' + providerName);
+      ? ('analyzed by ' + modelName + ' on ' + providerName + 'AI')
+      : ('analyzed by ' + providerName + 'AI');
 
     html += '<div class="agent-tag"><span class="chip"></span> ' + escapeHtml(agentLabel) + '</div>';
 

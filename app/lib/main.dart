@@ -7,9 +7,9 @@ import 'theme/app_theme.dart';
 
 void main() {
   final service = PocketBasePronunciationService(
-    baseUrl: "http://127.0.0.1:8090", // for web browsers
+    //baseUrl: "http://127.0.0.1:8090", // for web browsers
     // baseUrl: "http://YOUR-IP:8090", // for physical devices
-    //baseUrl: "http://10.0.2.2:8090", // for Android emulator
+    baseUrl: "http://10.0.2.2:8090", // for Android emulator
   );
 
   final repository = PronunciationRepository(service);
