@@ -537,8 +537,8 @@ function render(data) {
     }
 
     var agentLabel = modelName
-      ? ('analyzed by ' + modelName + ' on ' + providerName + 'AI')
-      : ('analyzed by ' + providerName + 'AI');
+      ? ('analyzed by ' + modelName + ' on ' + providerName + ' AI')
+      : ('analyzed by ' + providerName + ' AI');
 
     html += '<div class="agent-tag"><span class="chip"></span> ' + escapeHtml(agentLabel) + '</div>';
 
