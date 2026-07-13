@@ -1,34 +1,3 @@
-// package main
-
-// import (
-// 	"log"
-// 	"myap/pb_hooks/api"
-// 	"os"
-
-// 	"github.com/pocketbase/pocketbase"
-// 	"github.com/pocketbase/pocketbase/apis"
-// 	"github.com/pocketbase/pocketbase/core"
-// )
-
-// func main() {
-//     app := pocketbase.New()
-
-//     app.OnServe().BindFunc(func(se *core.ServeEvent) error {
-//         // serves static files from the provided public dir (if exists)
-//         se.Router.GET("/{path...}", apis.Static(os.DirFS("./pb_public"), false))
-
-//         api.RegisterPronunciationRoutes(se)
-
-//         return se.Next()
-//     })
-
-//     if err := app.Start(); err != nil {
-//         log.Fatal(err)
-//     }
-// }
-
-
-
 package main
 
 import (
@@ -39,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/plugins/jsvm"
 )
 
 func main() {
@@ -49,6 +19,10 @@ func main() {
 	}
 
 	app := pocketbase.New()
+
+	jsvm.MustRegister(app, jsvm.Config{
+		MigrationsDir: "pb_migrations",
+	})
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 
@@ -63,54 +37,65 @@ func main() {
 }
 
 
+// package main
+
+// import (
+// 	"log"
+// 	"os"
+
+// 	"myap/pb_hooks/api"
+
+// 	"github.com/joho/godotenv"
+// 	"github.com/pocketbase/pocketbase"
+// 	"github.com/pocketbase/pocketbase/core"
+// 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
+// )
 
 
+// func main() {
 
+// 	err := godotenv.Load()
+// 	if err != nil {
+// 		log.Println("No .env file found. Falling back to system environment variables.")
+// 	}
 
+// 	app := pocketbase.New()
 
+// 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
+// 		// Automigrate keeps pb_migrations/ in sync with schema changes made in the dashboard
+// 		// during local dev; safe to leave true, but data only comes from committed migration files
+// 		Automigrate: os.Getenv("ENVIRONMENT") != "production",
+// 	})
 
+// 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 
-// {
-//   "script": "President Volodymyr Zelenskyy met with NATO Secretary General Mark Rutte in The Hague."
+// 		api.RegisterRoutes(se)
+
+// 		return se.Next()
+// 	})
+
+// 	if err := app.Start(); err != nil {
+// 		log.Fatal(err)
+// 	}
 // }
 
+// func main() {
 
-// About the config package
+// 	err := godotenv.Load()
+// 	if err != nil {
+// 		log.Println("No .env file found. Falling back to system environment variables.")
+// 	}
 
-// When I suggested:
+// 	app := pocketbase.New()
 
-// package config
+// 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 
-// var GeminiAPIKey = os.Getenv("GEMINI_API_KEY")
+// 		api.RegisterRoutes(se)
 
-// I meant creating a new package like this:
+// 		return se.Next()
+// 	})
 
-// project/
-// │
-// ├── config/
-// │   └── config.go
-// │
-// ├── pb_hooks/
-// │
-// ├── main.go
-// │
-// └── go.mod
-
-// with:
-
-// package config
-
-// import "os"
-
-// var GeminiAPIKey = os.Getenv("GEMINI_API_KEY")
-
-// Then in pronounce.go you'd write:
-
-// provider := &ai.GeminiProvider{
-//     APIKey: config.GeminiAPIKey,
+// 	if err := app.Start(); err != nil {
+// 		log.Fatal(err)
+// 	}
 // }
-
-// instead of:
-
-// provider := &ai.GeminiProvider{
-//     APIKey: os.Getenv("GEMINI_API_KEY"),
