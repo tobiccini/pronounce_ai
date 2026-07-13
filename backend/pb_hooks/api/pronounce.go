@@ -408,8 +408,9 @@ func RegisterRoutes(se *core.ServeEvent) {
   <footer>
     health: <a href="/api/health">/api/health</a> &nbsp;&middot;&nbsp;
     endpoint: <code>POST /api/pronounce</code>
-    <div class="powered-by">Powered by <b>AMD</b> + <b>Fireworks AI</b></div>
-  </footer>
+    // <div class="powered-by">Powered by <b>AMD</b> + <b>Fireworks AI</b></div>
+    <div class="powered-by">Powered by <b>AMD</b></div>
+    </footer>
 
 </div>
 
@@ -480,6 +481,11 @@ function render(data) {
     data.processingTimeMs + 'ms</div>';
 
   var providerName = data.provider || 'AI Agent';
+  var modelName = '';
+  if (data.model) {
+    var parts = String(data.model).split('/');
+    modelName = parts[parts.length - 1];
+  }
 
   data.words.forEach(function (w) {
     var diffClass = difficultyClass(w.difficulty);
@@ -530,7 +536,11 @@ function render(data) {
       html += '</ul></div>';
     }
 
-    html += '<div class="agent-tag"><span class="chip"></span> analyzed by ' + escapeHtml(providerName) + '</div>';
+    var agentLabel = modelName
+      ? ('analyzed ' + modelName + ' on ' + providerName)
+      : ('analyzed by ' + providerName);
+
+    html += '<div class="agent-tag"><span class="chip"></span> ' + escapeHtml(agentLabel) + '</div>';
 
     html += '</div>';
   });
