@@ -257,7 +257,8 @@ class _HomePageState extends State<HomePage> {
 
                                       SizedBox(width: 8),
 
-                                      Text("Powered by AMD + Fireworks"),
+                                      // Text("Powered by AMD + Fireworks"),
+                                      Text("Powered by AMD"),
                                     ],
                                   ),
                                 ),

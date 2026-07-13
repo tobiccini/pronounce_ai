@@ -68,7 +68,7 @@ class DifficultySummary extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-    child: _badge(
+                  child: _badge(
                     color: AppColors.easy(context),
                     title: "Easy",
                     count: easy,
@@ -99,10 +99,20 @@ class DifficultySummary extends StatelessWidget {
 
             const SizedBox(height: 16),
 
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Text(
+            //     "${'${response.provider} AI'} • v${response.version}",
+            //     style: TextStyle(
+            //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+            //       fontSize: 13,
+            //     ),
+            //   ),
+            // ),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "${response.provider} • v${response.version}",
+                "${response.provider} AI • ${response.version.split('/').last}",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 13,
