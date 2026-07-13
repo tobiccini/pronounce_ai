@@ -48,11 +48,11 @@ func (f *FireworksProvider) Analyze(script string) (*PronunciationResponse, erro
 	fmt.Printf("Primary model failed (%s): %v\n", f.Model, err)
 
 	// Don't retry if we're already using Flash
-	if f.Model == "accounts/fireworks/models/nemotron-3-ultra-nvfp4" {
+	if f.Model == "accounts/fireworks/models/kimi-k2p6" {
 		return nil, err
 	}
 	// jj
-	fallback := "accounts/fireworks/models/nemotron-3-ultra-nvfp4"
+	fallback := "accounts/fireworks/models/kimi-k2p6"
 
 	fmt.Printf("Retrying with fallback model: %s\n", fallback)
 

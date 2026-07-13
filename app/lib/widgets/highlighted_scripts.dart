@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/pronunciation.dart';
+import '../theme/app_theme.dart';
 import 'pronunciation_bottom_sheet.dart';
 
 class HighlightedScript extends StatefulWidget {
@@ -31,10 +32,12 @@ class _HighlightedScriptState extends State<HighlightedScript> {
       return const SizedBox();
     }
 
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+
     if (widget.pronunciations.isEmpty) {
       return SelectableText(
         widget.script,
-        style: const TextStyle(fontSize: 18, height: 1.8),
+        style: TextStyle(fontSize: 18, height: 1.8, color: onSurface),
       );
     }
 
@@ -52,7 +55,7 @@ class _HighlightedScriptState extends State<HighlightedScript> {
         spans.add(
           TextSpan(
             text: widget.script.substring(current, item.startIndex),
-            style: const TextStyle(color: Colors.black87),
+            style: TextStyle(color: onSurface),
           ),
         );
       }
@@ -100,18 +103,24 @@ class _HighlightedScriptState extends State<HighlightedScript> {
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
 
                 decoration: BoxDecoration(
-                  color: _backgroundColor(item.difficulty),
+                  color: AppColors.highlightBg(context, item.difficulty),
 
                   borderRadius: BorderRadius.circular(8),
 
                   border: Border.all(
-                    color: _textColor(item.difficulty).withValues(alpha: .25),
+                    color: AppColors.highlightFg(
+                      context,
+                      item.difficulty,
+                    ).withValues(alpha: .25),
                   ),
 
                   boxShadow: selectedIndex == i
                       ? [
                           BoxShadow(
-                            color: _backgroundColor(item.difficulty),
+                            color: AppColors.highlightBg(
+                              context,
+                              item.difficulty,
+                            ),
                             blurRadius: 20,
                             spreadRadius: 3,
                             offset: const Offset(0, 6),
@@ -119,7 +128,9 @@ class _HighlightedScriptState extends State<HighlightedScript> {
                         ]
                       : [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: .05),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.shadow.withValues(alpha: .08),
                             blurRadius: 4,
                           ),
                         ],
@@ -129,7 +140,7 @@ class _HighlightedScriptState extends State<HighlightedScript> {
                   widget.script.substring(item.startIndex, item.endIndex),
 
                   style: TextStyle(
-                    color: _textColor(item.difficulty),
+                    color: AppColors.highlightFg(context, item.difficulty),
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
                     letterSpacing: .2,
@@ -148,7 +159,7 @@ class _HighlightedScriptState extends State<HighlightedScript> {
       spans.add(
         TextSpan(
           text: widget.script.substring(current),
-          style: const TextStyle(color: Colors.black87),
+          style: TextStyle(color: onSurface),
         ),
       );
     }
@@ -161,47 +172,11 @@ class _HighlightedScriptState extends State<HighlightedScript> {
         padding: const EdgeInsets.all(22),
         child: RichText(
           text: TextSpan(
-            style: const TextStyle(
-              fontSize: 18,
-              height: 2,
-              color: Colors.black87,
-            ),
+            style: TextStyle(fontSize: 18, height: 2, color: onSurface),
             children: spans,
           ),
         ),
       ),
     );
-  }
-
-  Color _backgroundColor(String difficulty) {
-    switch (difficulty.toLowerCase()) {
-      case "easy":
-        return const Color(0xffDCFCE7);
-
-      case "medium":
-        return const Color(0xffFEF3C7);
-
-      case "hard":
-        return const Color(0xffFEE2E2);
-
-      default:
-        return Colors.blue.shade100;
-    }
-  }
-
-  Color _textColor(String difficulty) {
-    switch (difficulty.toLowerCase()) {
-      case "easy":
-        return const Color(0xff166534);
-
-      case "medium":
-        return const Color(0xff92400E);
-
-      case "hard":
-        return const Color(0xff991B1B);
-
-      default:
-        return Colors.blue.shade900;
-    }
   }
 }

@@ -7,8 +7,15 @@ import '../models/pronunciation_response.dart';
 
 class HomePage extends StatefulWidget {
   final PronunciationRepository repository;
+  final ThemeMode themeMode;
+  final VoidCallback onToggleTheme;
 
-  const HomePage({super.key, required this.repository});
+  const HomePage({
+    super.key,
+    required this.repository,
+    required this.themeMode,
+    required this.onToggleTheme,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -77,6 +84,15 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Pronunciation Assistant"),
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: widget.onToggleTheme,
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined,
+            ),
+            tooltip: "Toggle dark mode",
+          ),
           IconButton(
             onPressed: _response == null ? null : _analyze,
 
@@ -149,7 +165,10 @@ class _HomePageState extends State<HomePage> {
             if (_error != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(_error!, style: const TextStyle(color: Colors.red)),
+                child: Text(
+                  _error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ),
 
             const SizedBox(height: 8),
@@ -163,17 +182,15 @@ class _HomePageState extends State<HomePage> {
                           Icon(
                             Icons.record_voice_over,
                             size: 90,
-                            color: Colors.grey.shade400,
+                            color: Theme.of(context).colorScheme.outline,
                           ),
 
                           const SizedBox(height: 24),
 
-                          const Text(
+                          Text(
                             "Paste a news script",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
 
                           const SizedBox(height: 8),
@@ -181,7 +198,11 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "We'll detect difficult names,\nplaces and organizations.",
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey.shade600),
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ],
                       ),
@@ -221,7 +242,9 @@ class _HomePageState extends State<HomePage> {
                                   ),
 
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.surfaceContainerHighest,
 
                                     borderRadius: BorderRadius.circular(30),
                                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/pronunciation.dart';
+import '../theme/app_theme.dart';
 
 class PronunciationBottomSheet extends StatelessWidget {
   final Pronunciation pronunciation;
@@ -16,10 +17,14 @@ class PronunciationBottomSheet extends StatelessWidget {
       maxChildSize: .95,
       minChildSize: .55,
       builder: (_, controller) {
+        final scheme = Theme.of(context).colorScheme;
+
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          decoration: BoxDecoration(
+            color: scheme.surfaceContainerLow,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
           ),
           clipBehavior: Clip.antiAlias,
           child: ListView(
@@ -35,8 +40,7 @@ class PronunciationBottomSheet extends StatelessWidget {
                   width: 72,
                   height: 7,
                   decoration: BoxDecoration(
-                    // color: Colors.grey.shade400,
-                    color: Colors.grey.shade300,
+                    color: scheme.outlineVariant,
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -62,7 +66,7 @@ class PronunciationBottomSheet extends StatelessWidget {
 
               Text(
                 pronunciation.replacement,
-                style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
+                style: TextStyle(fontSize: 16, color: scheme.onSurfaceVariant),
               ),
 
               const SizedBox(height: 10),
@@ -81,8 +85,19 @@ class PronunciationBottomSheet extends StatelessWidget {
                   ),
                   Chip(
                     surfaceTintColor: Colors.transparent,
-                    backgroundColor: _difficultyColor(pronunciation.difficulty),
-                    label: Text(pronunciation.difficulty),
+                    backgroundColor: AppColors.highlightBg(
+                      context,
+                      pronunciation.difficulty,
+                    ),
+                    label: Text(
+                      pronunciation.difficulty,
+                      style: TextStyle(
+                        color: AppColors.highlightFg(
+                          context,
+                          pronunciation.difficulty,
+                        ),
+                      ),
+                    ),
                     visualDensity: VisualDensity.compact,
                   ),
                 ],
@@ -137,12 +152,15 @@ class PronunciationBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
+                    color: scheme.primaryContainer,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Text(
                     pronunciation.replacement,
-                    style: const TextStyle(fontSize: 17),
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: scheme.onPrimaryContainer,
+                    ),
                   ),
                 ),
               ),
@@ -188,7 +206,7 @@ class PronunciationBottomSheet extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: scheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
@@ -279,21 +297,6 @@ class PronunciationBottomSheet extends StatelessWidget {
     );
   }
 
-  Color _difficultyColor(String difficulty) {
-    switch (difficulty.toLowerCase()) {
-      case "easy":
-        return Colors.green.shade100;
-
-      case "medium":
-        return Colors.orange.shade100;
-
-      case "hard":
-        return Colors.red.shade100;
-
-      default:
-        return Colors.blue.shade100;
-    }
-  }
 }
 
 class _Section extends StatelessWidget {
@@ -312,7 +315,7 @@ class _Section extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.grey.shade700,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),

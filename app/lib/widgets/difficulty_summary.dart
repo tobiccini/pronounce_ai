@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pronounce_ai/models/pronunciation_response.dart';
+import 'package:pronounce_ai/theme/app_theme.dart';
 
 class DifficultySummary extends StatelessWidget {
   final PronunciationResponse response;
@@ -67,8 +68,8 @@ class DifficultySummary extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _badge(
-                    color: Colors.green,
+    child: _badge(
+                    color: AppColors.easy(context),
                     title: "Easy",
                     count: easy,
                   ),
@@ -78,7 +79,7 @@ class DifficultySummary extends StatelessWidget {
 
                 Expanded(
                   child: _badge(
-                    color: Colors.orange,
+                    color: AppColors.medium(context),
                     title: "Medium",
                     count: medium,
                   ),
@@ -87,7 +88,11 @@ class DifficultySummary extends StatelessWidget {
                 const SizedBox(width: 12),
 
                 Expanded(
-                  child: _badge(color: Colors.red, title: "Hard", count: hard),
+                  child: _badge(
+                    color: AppColors.hard(context),
+                    title: "Hard",
+                    count: hard,
+                  ),
                 ),
               ],
             ),
@@ -98,7 +103,10 @@ class DifficultySummary extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 "${response.provider} • v${response.version}",
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 13,
+                ),
               ),
             ),
           ],
